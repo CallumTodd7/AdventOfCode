@@ -45,21 +45,36 @@ Your puzzle answer was 262738554.
 Both parts of this puzzle are complete! They provide two gold stars: **
 */
 
-// swift -swift-version 5 day1.swift ./day1_input.txt
 
 import Foundation
 
-let inputFilePath = CommandLine.arguments[1]
-let inputText = try! String(contentsOf: URL(fileURLWithPath: inputFilePath), encoding: .utf8)
-let input: [Int] = inputText.components(separatedBy: .newlines).compactMap(Int.init)
+struct Y2020_D1_P1: Puzzle {
+    static let year: Int = 2020
+    static let day: Int = 1
+    static let part: Int? = 1
+    
+    func solve(input: String) -> PuzzleResult {
+        calculateTwo(input.components(separatedBy: .newlines).compactMap(Int.init))
+    }
+}
 
-let sumTarget = 2020
+struct Y2020_D1_P2: Puzzle {
+    static let year: Int = 2020
+    static let day: Int = 1
+    static let part: Int? = 2
+    
+    func solve(input: String) -> PuzzleResult {
+        calculateThree(input.components(separatedBy: .newlines).compactMap(Int.init))
+    }
+}
 
-print("input: \(input)")
+
+fileprivate let sumTarget = 2020
+
 
 // Part 1
 
-func calculateTwo() -> Int {
+fileprivate func calculateTwo(_ input: [Int]) -> Int {
     for (indexA, entryA) in input.enumerated() {
         for entryB in input.suffix(from: indexA) {
             if entryA + entryB == sumTarget {
@@ -70,11 +85,10 @@ func calculateTwo() -> Int {
     fatalError("Result not found")
 }
 
-print("result of two: \(calculateTwo())")
 
 // Part 2
 
-func calculateThree() -> Int {
+fileprivate func calculateThree(_ input: [Int]) -> Int {
     for (indexA, entryA) in input.enumerated() {
         for (indexB, entryB) in input.suffix(from: indexA).enumerated() {
             for entryC in input.suffix(from: indexB) {
@@ -87,4 +101,3 @@ func calculateThree() -> Int {
     fatalError("Result not found")
 }
 
-print("result of three: \(calculateThree())")

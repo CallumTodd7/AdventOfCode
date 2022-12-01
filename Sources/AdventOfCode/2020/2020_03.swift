@@ -78,11 +78,10 @@ Your puzzle answer was 3424528800.
 Both parts of this puzzle are complete! They provide two gold stars: **
 */
 
-// swift -swift-version 5 day3.swift ./day3_input.txt
 
 import Foundation
 
-extension Array {
+fileprivate extension Array {
     subscript(index: Int, wrap: Bool) -> Element {
         get {
             if wrap {
@@ -101,16 +100,48 @@ extension Array {
     }
 }
 
-let inputFilePath = CommandLine.arguments[1]
-let inputText = try! String(contentsOf: URL(fileURLWithPath: inputFilePath), encoding: .utf8)
-let treeMap: [[Character]] = inputText.components(separatedBy: .newlines).compactMap {
-    guard !$0.isEmpty else { return nil }
-    return Array($0)
+struct Y2020_D3_P1: Puzzle {
+    static let year: Int = 2020
+    static let day: Int = 3
+    static let part: Int? = 1
+    
+    func solve(input: String) -> PuzzleResult {
+        let treeMap: [[Character]] = input.components(separatedBy: .newlines).compactMap {
+            guard !$0.isEmpty else { return nil }
+            return Array($0)
+        }
+        return countTreesOnSlope(treeMap, 3, 1)
+    }
 }
 
-// Part 1
+struct Y2020_D3_P2: Puzzle {
+    static let year: Int = 2020
+    static let day: Int = 3
+    static let part: Int? = 2
+    
+    func solve(input: String) -> PuzzleResult {
+        let treeMap: [[Character]] = input.components(separatedBy: .newlines).compactMap {
+            guard !$0.isEmpty else { return nil }
+            return Array($0)
+        }
+        
+        let slopes = [
+            (1, 1),
+            (3, 1),
+            (5, 1),
+            (7, 1),
+            (1, 2)
+        ]
 
-func isTreeAtPosition(_ x: Int, _ y: Int) -> Bool? {
+        var result = 1
+        for (x, y) in slopes {
+            result *= countTreesOnSlope(treeMap, x, y)
+        }
+        return result
+    }
+}
+
+fileprivate func isTreeAtPosition(_ treeMap: [[Character]], _ x: Int, _ y: Int) -> Bool? {
     guard y < treeMap.count else {
         return nil
     }
@@ -118,14 +149,14 @@ func isTreeAtPosition(_ x: Int, _ y: Int) -> Bool? {
     return row[x, true] == "#"
 }
 
-func countTreesOnSlope(_ xSlope: Int, _ ySlope: Int) -> Int {
+fileprivate func countTreesOnSlope(_ treeMap: [[Character]], _ xSlope: Int, _ ySlope: Int) -> Int {
     var count = 0
 
     var tree: Bool?
     var x: Int = xSlope
     var y: Int = ySlope
     repeat {
-        tree = isTreeAtPosition(x, y)
+        tree = isTreeAtPosition(treeMap, x, y)
         if tree == .some(true) {
             count += 1
         }
@@ -136,21 +167,3 @@ func countTreesOnSlope(_ xSlope: Int, _ ySlope: Int) -> Int {
     return count
 }
 
-let slopex3y1Count = countTreesOnSlope(3, 1)
-print("There are \(slopex3y1Count) trees on the slope 3, 1")
-
-// Part 2
-
-let slopes = [
-    (1, 1),
-    (3, 1),
-    (5, 1),
-    (7, 1),
-    (1, 2)
-]
-
-var result = 1
-for (x, y) in slopes {
-    result *= countTreesOnSlope(x, y)
-}
-print("There are \(result) trees on the slopes \(slopes)")

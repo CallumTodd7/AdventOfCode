@@ -46,7 +46,6 @@ Your puzzle answer was 694.
 Both parts of this puzzle are complete! They provide two gold stars: **
 */
 
-// swift -swift-version 5 day2.swift ./day2_input.txt
 
 import Foundation
 
@@ -56,25 +55,46 @@ struct PasswordAndPolicy {
     let password: String
 }
 
-let inputFilePath = CommandLine.arguments[1]
-let inputText = try! String(contentsOf: URL(fileURLWithPath: inputFilePath), encoding: .utf8)
-let inputLines: [String] = inputText.components(separatedBy: .newlines)
-let input: [PasswordAndPolicy] = inputLines.compactMap {
-    let parts = $0.components(separatedBy: " ")
-    guard parts.count == 3 else {
-        return nil
+struct Y2020_D2_P1: Puzzle {
+    static let year: Int = 2020
+    static let day: Int = 2
+    static let part: Int? = 1
+    
+    func solve(input: String) -> PuzzleResult {
+        return getValidPasswordsRange(parse(inputText: input)).count
     }
+}
 
-    let rangeParts = parts[0].components(separatedBy: "-")
-    let range = Int(rangeParts[0])!...Int(rangeParts[1])!
-    let letter = parts[1].first!
-    let password = parts[2]
-    return PasswordAndPolicy(policyLetter: letter, policyRange: range, password: password)
+struct Y2020_D2_P2: Puzzle {
+    static let year: Int = 2020
+    static let day: Int = 2
+    static let part: Int? = 2
+    
+    func solve(input: String) -> PuzzleResult {
+        return getValidPasswordsXOR(parse(inputText: input)).count
+    }
+}
+
+fileprivate func parse(inputText: String) -> [PasswordAndPolicy] {
+    let inputLines: [String] = inputText.components(separatedBy: .newlines)
+    let input: [PasswordAndPolicy] = inputLines.compactMap {
+        let parts = $0.components(separatedBy: " ")
+        guard parts.count == 3 else {
+            return nil
+        }
+        
+        let rangeParts = parts[0].components(separatedBy: "-")
+        let range = Int(rangeParts[0])!...Int(rangeParts[1])!
+        let letter = parts[1].first!
+        let password = parts[2]
+        return PasswordAndPolicy(policyLetter: letter, policyRange: range, password: password)
+    }
+    return input
 }
 
 // Part 1
 
-func getValidPasswordsRange() -> [String] {
+fileprivate func getValidPasswordsRange(_ input: [PasswordAndPolicy]) -> [String] {
     var validPasswords: [String] = []
     for entry in input {
         if entry.policyRange.contains(entry.password.filter({ $0 == entry.policyLetter }).count) {
@@ -84,11 +104,10 @@ func getValidPasswordsRange() -> [String] {
     return validPasswords
 }
 
-print("There are \(getValidPasswordsRange().count) valid passwords")
 
 // Part 2
 
-func getValidPasswordsXOR() -> [String] {
+fileprivate func getValidPasswordsXOR(_ input: [PasswordAndPolicy]) -> [String] {
     var validPasswords: [String] = []
     for entry in input {
         let matchA = entry.password[entry.password.index(entry.password.startIndex, offsetBy: entry.policyRange.lowerBound - 1)] == entry.policyLetter
@@ -100,4 +119,3 @@ func getValidPasswordsXOR() -> [String] {
     return validPasswords
 }
 
-print("There are \(getValidPasswordsXOR().count) valid passwords")

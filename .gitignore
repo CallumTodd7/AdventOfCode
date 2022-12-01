@@ -24,3 +24,25 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+### SwiftPackageManager ###
+Packages
+.build/
+xcuserdata
+DerivedData/
+*.xcodeproj
+
+### Xcode ###
+## User settings
+xcuserdata/
+
+*.xcscmblueprint
+*.xccheckout
+
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcodeproj/project.xcworkspace/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
