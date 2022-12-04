@@ -102,9 +102,7 @@ struct Y2022_D2_P1: Puzzle {
     static let part: Int? = 1
     
     func solve(input: String) -> PuzzleResult {
-        let strategy = input
-            .components(separatedBy: .newlines)
-            .filter({ !$0.isEmpty })
+        let strategy = input.lines
             .map({ string -> (theirs: Play, ours: Play) in
                 precondition(string.count == 3)
                 let theirs = Play.from(string[string.startIndex])
@@ -125,9 +123,7 @@ struct Y2022_D2_P2: Puzzle {
     static let part: Int? = 2
     
     func solve(input: String) -> PuzzleResult {
-        let strategy = input
-            .components(separatedBy: .newlines)
-            .filter({ !$0.isEmpty })
+        let strategy = input.lines
             .map({ string -> (theirPlay: Play, desiredWinner: Winner) in
                 precondition(string.count == 3)
                 let theirPlay = Play.from(string[string.startIndex])

@@ -33,30 +33,26 @@ fileprivate struct Rucksack {
         let items: [Item]
     }
     
-    let firstCompartment: Compartment
-    let secondCompartment: Compartment
+    let compartments: [Compartment]
     
-    var uniqueItems: Set<Item> {
-        let first = Set(firstCompartment.items)
-        let second = Set(secondCompartment.items)
-        return first.union(second)
+    var allItems: [Item] {
+        compartments.flatMap(\.items)
     }
     
     init(string: String) {
         precondition(string.count % 2 == 0)
-        let first = string.prefix(string.count / 2)
-        let second = string.suffix(string.count / 2)
-        self.firstCompartment = .init(items: Array(first).map(Item.init))
-        self.secondCompartment = .init(items: Array(second).map(Item.init))
+        self.compartments = [
+            .init(items: Array(string.prefix(string.count / 2)).map(Item.init)),
+            .init(items: Array(string.suffix(string.count / 2)).map(Item.init)),
+        ]
     }
     
-    func duplicates() -> [Item] {
-        let first = Set(firstCompartment.items)
-        let second = Set(secondCompartment.items)
-        return Array(first.intersection(second))
+    func commonItemsBetweenComponents() -> Set<Item> {
+        return compartments
+            .map(\.items).map(Set.init) // Unique items per compartment
+            .commonItems()
     }
 }
-
 
 struct Y2022_D3_P1: Puzzle {
     static let year: Int = 2022
@@ -64,12 +60,10 @@ struct Y2022_D3_P1: Puzzle {
     static let part: Int? = 1
     
     func solve(input: String) -> PuzzleResult {
-        return input
-            .components(separatedBy: .newlines)
-            .filter({ !$0.isEmpty })
+        return input.lines
             .map(Rucksack.init)
             .map { rucksack -> Item in
-                let duplicates = rucksack.duplicates()
+                let duplicates = rucksack.commonItemsBetweenComponents()
                 precondition(duplicates.count == 1)
                 return duplicates.first!
             }
@@ -78,18 +72,16 @@ struct Y2022_D3_P1: Puzzle {
     }
 }
 
-
 struct Y2022_D3_P2: Puzzle {
     static let year: Int = 2022
     static let day: Int = 3
     static let part: Int? = 2
     
     func solve(input: String) -> PuzzleResult {
-        return input
-            .components(separatedBy: .newlines)
-            .filter({ !$0.isEmpty })
+        return input.lines
             .map(Rucksack.init)
-            .map(\.uniqueItems)
+            .map(\.allItems)
+            .map(Set.init) // Unique
             .chunks(ofCount: 3)
             .map { itemsPerGroup -> Item in
                 let sharedItems = itemsPerGroup
