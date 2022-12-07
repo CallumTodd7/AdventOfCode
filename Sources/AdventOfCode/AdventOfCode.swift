@@ -25,6 +25,8 @@ struct AdventOfCode: ParsableCommand {
         Y2022_D4_P2.self,
         Y2022_D5_P1.self,
         Y2022_D5_P2.self,
+        Y2022_D6_P1.self,
+        Y2022_D6_P2.self,
     ]
     
     @Option var year: Int = Calendar.current.component(.year, from: Date())
