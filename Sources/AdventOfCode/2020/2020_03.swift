@@ -104,6 +104,7 @@ struct Y2020_D3_P1: Puzzle {
     static let year: Int = 2020
     static let day: Int = 3
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 145
     
     func solve(input: String) -> PuzzleResult {
         let treeMap: [[Character]] = input.components(separatedBy: .newlines).compactMap {
@@ -118,6 +119,7 @@ struct Y2020_D3_P2: Puzzle {
     static let year: Int = 2020
     static let day: Int = 3
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 3424528800
     
     func solve(input: String) -> PuzzleResult {
         let treeMap: [[Character]] = input.components(separatedBy: .newlines).compactMap {

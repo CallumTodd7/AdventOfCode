@@ -11,6 +11,7 @@ struct Y2021_D1_P1: Puzzle {
     static let year: Int = 2021
     static let day: Int = 1
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 1715
     
     func solve(input: String) -> PuzzleResult {
         let lines = input.split(separator: "\n").map { Int($0)! }
@@ -22,6 +23,7 @@ struct Y2021_D1_P2: Puzzle {
     static let year: Int = 2021
     static let day: Int = 1
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 1739
     
     func solve(input: String) -> PuzzleResult {
         let lines = input.split(separator: "\n").map { Int($0)! }

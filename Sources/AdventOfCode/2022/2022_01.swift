@@ -25,6 +25,7 @@ struct Y2022_D1_P1: Puzzle {
     static let year: Int = 2022
     static let day: Int = 1
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 70296
     
     func solve(input: String) -> PuzzleResult {
         return caloriesPerElf(input: input)
@@ -36,6 +37,7 @@ struct Y2022_D1_P2: Puzzle {
     static let year: Int = 2022
     static let day: Int = 1
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 205381
     
     func solve(input: String) -> PuzzleResult {
         return caloriesPerElf(input: input)

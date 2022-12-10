@@ -68,6 +68,7 @@ struct Y2022_D5_P1: Puzzle {
     static let year: Int = 2022
     static let day: Int = 5
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = "MQTPGLLDN"
     
     func solve(input: String) -> PuzzleResult {
         var (dockYard, instructions) = parseStacksAndInstructions(input: input)
@@ -84,6 +85,7 @@ struct Y2022_D5_P2: Puzzle {
     static let year: Int = 2022
     static let day: Int = 5
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = "LVZPSTTCZ"
     
     func solve(input: String) -> PuzzleResult {
         var (dockYard, instructions) = parseStacksAndInstructions(input: input)

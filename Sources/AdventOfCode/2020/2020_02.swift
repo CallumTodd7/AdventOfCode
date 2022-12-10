@@ -59,6 +59,7 @@ struct Y2020_D2_P1: Puzzle {
     static let year: Int = 2020
     static let day: Int = 2
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 410
     
     func solve(input: String) -> PuzzleResult {
         return getValidPasswordsRange(parse(inputText: input)).count
@@ -69,6 +70,7 @@ struct Y2020_D2_P2: Puzzle {
     static let year: Int = 2020
     static let day: Int = 2
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 694
     
     func solve(input: String) -> PuzzleResult {
         return getValidPasswordsXOR(parse(inputText: input)).count

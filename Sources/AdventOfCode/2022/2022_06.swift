@@ -17,6 +17,7 @@ struct Y2022_D6_P1: Puzzle {
     static let year: Int = 2022
     static let day: Int = 6
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 1538
     
     func solve(input: String) -> PuzzleResult {
         return findMarker(ofCount: 4, in: input)
@@ -27,6 +28,7 @@ struct Y2022_D6_P2: Puzzle {
     static let year: Int = 2022
     static let day: Int = 6
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 2315
     
     func solve(input: String) -> PuzzleResult {
         return findMarker(ofCount: 14, in: input)

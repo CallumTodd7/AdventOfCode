@@ -100,6 +100,7 @@ struct Y2022_D2_P1: Puzzle {
     static let year: Int = 2022
     static let day: Int = 2
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 14069
     
     func solve(input: String) -> PuzzleResult {
         let strategy = input.lines
@@ -121,6 +122,7 @@ struct Y2022_D2_P2: Puzzle {
     static let year: Int = 2022
     static let day: Int = 2
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 12411
     
     func solve(input: String) -> PuzzleResult {
         let strategy = input.lines

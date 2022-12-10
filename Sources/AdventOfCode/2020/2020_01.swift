@@ -52,6 +52,7 @@ struct Y2020_D1_P1: Puzzle {
     static let year: Int = 2020
     static let day: Int = 1
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 787776
     
     func solve(input: String) -> PuzzleResult {
         calculateTwo(input.components(separatedBy: .newlines).compactMap(Int.init))
@@ -62,6 +63,7 @@ struct Y2020_D1_P2: Puzzle {
     static let year: Int = 2020
     static let day: Int = 1
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 262738554
     
     func solve(input: String) -> PuzzleResult {
         calculateThree(input.components(separatedBy: .newlines).compactMap(Int.init))

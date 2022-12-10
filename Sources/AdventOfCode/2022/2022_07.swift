@@ -122,6 +122,7 @@ struct Y2022_D7_P1: Puzzle {
     static let year: Int = 2022
     static let day: Int = 7
     static let part: Int? = 1
+    static let expectedAnswer: PuzzleResult? = 1743217
     
     func solve(input: String) -> PuzzleResult {
         var total: Int = 0
@@ -140,6 +141,7 @@ struct Y2022_D7_P2: Puzzle {
     static let year: Int = 2022
     static let day: Int = 7
     static let part: Int? = 2
+    static let expectedAnswer: PuzzleResult? = 8319096
     
     func solve(input: String) -> PuzzleResult {
         let capacity = 70000000
@@ -147,7 +149,7 @@ struct Y2022_D7_P2: Puzzle {
         var options: [Int] = []
         let fileSystem = buildFileSystem(from: input)
         let sizeNeededToRemove = 30000000 - (capacity - fileSystem.totalSize)
-        print("Need to remove at least: \(sizeNeededToRemove)")
+//        print("Need to remove at least: \(sizeNeededToRemove)")
         fileSystem
             .walk { node in
                 if node.children != nil && node.totalSize > sizeNeededToRemove {

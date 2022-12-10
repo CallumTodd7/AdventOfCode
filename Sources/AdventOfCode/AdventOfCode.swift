@@ -36,6 +36,7 @@ struct AdventOfCode: ParsableCommand {
     @Option var year: Int = Calendar.current.component(.year, from: Date())
     @Option var day: Int?
     @Option var part: Int?
+    @Flag var runRegression: Bool = false
     
     mutating func run() throws {
         let puzzlesToRun =
@@ -46,12 +47,52 @@ struct AdventOfCode: ParsableCommand {
         
         print("\(puzzlesToRun.count) puzzle(s) match given criteria: year=\(year), day=\(day.map(String.init) ?? "*"), part=\(part.map(String.init) ?? "*")")
         
+        // Run explicit puzzles
+        var brokenPuzzles: [(Puzzle, Puzzle.PuzzleResult)] = []
         for puzzleType in puzzlesToRun {
             let puzzle = puzzleType.init()
             
             print("\(puzzle.description): Running...")
             let answer = puzzle.solve()
             print("\(puzzle.description): Answer: \(answer)\n")
+            
+            if let expectedAnswer = puzzleType.expectedAnswer {
+                if answer.description != expectedAnswer.description {
+                    print("WARNING: Answer for \(puzzle.description) does not match expected answer: \(expectedAnswer)")
+                    brokenPuzzles.append((puzzle, answer))
+                }
+            }
+        }
+        
+        if runRegression {
+            // Run non-explicit puzzles for regressions
+            let puzzlesForRegression =
+                Self.puzzles
+                    .filter({ puzzle in !puzzlesToRun.contains(where: { $0 == puzzle }) })
+            
+            for puzzleType in puzzlesForRegression {
+                let puzzle = puzzleType.init()
+                if let expectedAnswer = puzzleType.expectedAnswer {
+                    let actualAnswer = puzzle.solve()
+                    if actualAnswer.description != expectedAnswer.description {
+                        brokenPuzzles.append((puzzle, actualAnswer))
+                    }
+                } else {
+                    print("WARNING: No known answer for \(puzzle.description). Unable to run regression")
+                }
+            }
+        }
+        
+        // Report regressions
+        if brokenPuzzles.isEmpty {
+            if runRegression {
+                print("No regressions in other puzzles")
+            }
+        } else {
+            print("WARNING: Regression!!")
+            for (puzzle, actualAnswer) in brokenPuzzles {
+                print("- Answer for \(puzzle.description) (\(actualAnswer)) does not match expected answer: \(type(of: puzzle).expectedAnswer ?? "nil")")
+            }
         }
     }
 }
@@ -61,6 +102,7 @@ protocol Puzzle: CustomStringConvertible {
     static var year: Int { get }
     static var day: Int { get }
     static var part: Int? { get }
+    static var expectedAnswer: PuzzleResult? { get }
     init()
     func solve(input: String) -> PuzzleResult
 }
