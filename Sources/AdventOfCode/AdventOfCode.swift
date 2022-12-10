@@ -31,6 +31,8 @@ struct AdventOfCode: ParsableCommand {
         Y2022_D7_P2.self,
         Y2022_D8_P1.self,
         Y2022_D8_P2.self,
+        Y2022_D9_P1.self,
+        Y2022_D9_P2.self,
     ]
     
     @Option var year: Int = Calendar.current.component(.year, from: Date())
@@ -54,7 +56,7 @@ struct AdventOfCode: ParsableCommand {
             
             print("\(puzzle.description): Running...")
             let answer = puzzle.solve()
-            print("\(puzzle.description): Answer: \(answer)\n")
+            print("\(puzzle.description): Answer: \(answer)")
             
             if let expectedAnswer = puzzleType.expectedAnswer {
                 if answer.description != expectedAnswer.description {
@@ -62,6 +64,8 @@ struct AdventOfCode: ParsableCommand {
                     brokenPuzzles.append((puzzle, answer))
                 }
             }
+            
+            print()
         }
         
         if runRegression {
@@ -91,7 +95,7 @@ struct AdventOfCode: ParsableCommand {
         } else {
             print("WARNING: Regression!!")
             for (puzzle, actualAnswer) in brokenPuzzles {
-                print("- Answer for \(puzzle.description) (\(actualAnswer)) does not match expected answer: \(type(of: puzzle).expectedAnswer ?? "nil")")
+                print("- Answer for '\(puzzle.description)' (\(actualAnswer)) does not match expected answer: \(type(of: puzzle).expectedAnswer ?? "nil")")
             }
         }
     }
