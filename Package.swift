@@ -31,6 +31,13 @@ let package = Package(
             ],
             resources: [
                 .copy("Inputs"),
+            ],
+            swiftSettings: [
+                .unsafeFlags([
+                    "-Xfrontend", "-warn-concurrency",
+                    "-Xfrontend", "-enable-actor-data-race-checks",
+                    "-Xfrontend", "-enable-bare-slash-regex",
+                ])
             ]
         ),
     ]

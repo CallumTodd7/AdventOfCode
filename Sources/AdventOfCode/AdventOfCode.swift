@@ -3,7 +3,7 @@ import Foundation
 
 @main
 struct AdventOfCode: ParsableCommand {
-    static var puzzles: [Puzzle.Type] = [
+    static let puzzles: [Puzzle.Type] = [
         // 2020
         Y2020_D1_P1.self,
         Y2020_D1_P2.self,
@@ -35,6 +35,8 @@ struct AdventOfCode: ParsableCommand {
         Y2022_D9_P2.self,
         Y2022_D10_P1.self,
         Y2022_D10_P2.self,
+        Y2022_D11_P1.self,
+        Y2022_D11_P2.self,
     ]
     
     @Option var year: Int = Calendar.current.component(.year, from: Date())
