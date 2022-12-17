@@ -102,7 +102,7 @@ struct Y2022_D9_P2: Puzzle {
     static let year: Int = 2022
     static let day: Int = 9
     static let part: Int? = 2
-    static let expectedAnswer: PuzzleResult? = nil
+    static let expectedAnswer: PuzzleResult? = 2661
     
     func solve(input: String) -> PuzzleResult {
         var simulator = RopeSimilator(knotCount: 10)

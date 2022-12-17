@@ -33,6 +33,8 @@ struct AdventOfCode: ParsableCommand {
         Y2022_D8_P2.self,
         Y2022_D9_P1.self,
         Y2022_D9_P2.self,
+        Y2022_D10_P1.self,
+        Y2022_D10_P2.self,
     ]
     
     @Option var year: Int = Calendar.current.component(.year, from: Date())
@@ -56,7 +58,11 @@ struct AdventOfCode: ParsableCommand {
             
             print("\(puzzle.description): Running...")
             let answer = puzzle.solve()
-            print("\(puzzle.description): Answer: \(answer)")
+            if answer.description.contains(where: { $0.unicodeScalars.contains(where: { CharacterSet.newlines.contains($0) }) }) {
+                print("\(puzzle.description): Answer:\n\(answer)")
+            } else {
+                print("\(puzzle.description): Answer: \(answer)")
+            }
             
             if let expectedAnswer = puzzleType.expectedAnswer {
                 if answer.description != expectedAnswer.description {
